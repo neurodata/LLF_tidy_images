@@ -2,9 +2,6 @@
 
 ## ImageMagick is required
 
-## test
-##find ./ -regex ".*\(jpg\)" -execdir file {}\;
-
 
 ## Resize all the jpg's to be 32x32
 find ../datasets_tmp -regex ".*\(jpg\)" -exec echo {} \; -execdir convert {} -resize 32x32 {} \;

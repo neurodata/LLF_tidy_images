@@ -29,18 +29,23 @@ The total number of images should be 312,252
 
 | Dataset Name  | train|  test| classes|
 |:--------------|-----:|-----:|-------:|
+|birdsnap       | 47386|  2443| 500    |
 |cifar10        | 50000| 10000| 10     |   
 |cifar100       | 50000| 10000| 100    |
-|birdsnap       | 47386|  2443| 500    |
-|stanford-cars  |  8144|  8041| 196    |
-|flowers        |  2040|  6149| 102    |
+|DTD            |  3760|  1880| 47     |
 |FGVC_Aircraft  |  6667|  3333| 100    |
+|flowers        |  2040|  6149| 102    |
+|stanford-cars  |  8144|  8041| 196    |
 |Oxford_Pets    |  3680|  3369| 37     |
 |food-101       | 75750| 25250| 101    |
 |PASCAL_VOC2007 |  5011|  4952| 20     |
-|DTD            |  3760|  1880| 47     |
 |Caltech-101    |  3060|  6084| 102    |
 |SUN397         | 19850| 19850| 397    |
 
 
+# Image Pre-processing
 
+See [preprocessing.md](./preprocessing.md)
+
+
+---

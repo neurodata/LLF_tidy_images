@@ -1,5 +1,9 @@
 # LLF_tidy_images
 
+We assume that the below datasets have been downloaded to `../datasets/` relative
+to the root of this git repository and stored in individual folders
+appropriately named.
+
 ## Datasets
 
 

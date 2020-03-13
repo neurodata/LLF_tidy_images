@@ -26,10 +26,23 @@ def main(inFile):
 
     out.save(inFile, 'jpeg')
 
+def checkSquare(inFile):
+    im = Image.open(inFile)
+    
+    w = im.size[0]
+    h = im.size[1]
 
+    if w == h:
+        return(0)
+    else:
+        print("Not Square\n")
+        return(1)
+
+    
 if __name__ == "__main__":
 
     main(inFile)
+    checkSquare(inFile)
     
     
 

@@ -23,7 +23,7 @@ ratio. We find the maximum of (height,width) and pad the shorter side
 from both sides.  This can be done via the following:
 
 ```
-find ../datasets -regex ".*\(jpg\)" -exec ./padding.py {} \;
+sh pad.sh
 ```
 
 
@@ -31,7 +31,8 @@ find ../datasets -regex ".*\(jpg\)" -exec ./padding.py {} \;
 ## [resize.sh](./resize.sh)
 
 After padding to square we resize to match the smallest dimensions of
-the datasets (CIFAR = 32x32) using `ImageMagick`.
+the datasets (CIFAR = 32x32) using `tensorflow.image.resize` which
+defaults to `bilinear` interpolation.
 
 ```
 sh resize.sh

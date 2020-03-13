@@ -24,7 +24,7 @@ def main(inFile):
     
     out = ImageOps.pad(im, (M,M))
 
-    out.save(inFile, 'jpeg')
+    out.convert('RGB').save(inFile, 'jpeg')
 
 def checkSquare(inFile):
     im = Image.open(inFile)

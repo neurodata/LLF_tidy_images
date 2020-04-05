@@ -3,6 +3,7 @@ from PIL import Image
 from PIL import ImageOps
 from math import floor, sqrt
 from scipy.io import loadmat
+import csv
 import glob
 import os
 import argparse
@@ -83,9 +84,52 @@ def Flowers():
 
     return(0)
 
-def Pets():
+def Pets(directory):
+    pets_dir = directory + "Pets/" 
+    anno_dir = pets_dir + "annotations/"
 
-    return(0)
+    train_anno = [] 
+    test_anno = [] 
+
+    with open(anno_dir + "trainval.txt", newline="") as f:
+        reader = csv.reader(f, delimiter = " ")
+        for row in reader:
+            train_anno.append(row)
+
+    with open(anno_dir + "test.txt", newline="") as f:
+        reader = csv.reader(f, delimiter = " ")
+        for row in reader:
+            test_anno.append(row)
+
+    test_base = [i[0] + ".jpg" for i in test_anno]
+    train_base = [i[0] + ".jpg" for i in train_anno]
+    
+    baseNames = train_base + test_base
+
+    test_paths = [pets_dir + "images/" + i[0] + ".jpg" for i in test_anno]
+    train_paths = [pets_dir + "images/" + i[0] + ".jpg" for i in train_anno]
+
+    paths = train_paths + test_paths
+
+    spec = lambda y: 0 if y == 1 else 1
+
+    test_label0 = [['cat', 'dog'][spec(y[2])] for y in test_anno]
+    train_label0 = [['cat', 'dog'][spec(y[2])] for y in train_anno]
+
+    label0 = train_label0 + test_label0
+
+    ## Breed
+    test_label1 = [i[3] for i in test_anno]
+    train_label1 = [i[3] for i in train_anno]
+
+    label1 = train_label1 + test_label1
+
+    subset = ['train'] * len(train_anno) + ['test'] * len(test_anno)
+    
+    dPets = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels, 'subset' : subset}
+
+    return(dPets)
+    ## END Pets
 
 def SUN397():
 

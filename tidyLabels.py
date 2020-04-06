@@ -72,11 +72,13 @@ def Cars(directory):
     test_labels = [class_sup_names[i - 1] for i in class_test]
     train_labels = [class_sup_names[i - 1] for i in class_train]
     
-    labels = train_labels + test_labels
+    labels1 = train_labels + test_labels
+    labels0 = [i.split(' ')[0] for i in labels1]
 
     subset = ['train'] * len(train_labels) + ['test'] * len(test_labels)
 
-    dCars = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels, 'subset' : subset}
+    dCars = {'filePath' : paths, 'baseName' : baseNames, 
+             'label0' : labels0, 'labels1' : labels1, 'subset' : subset}
 
     return(dCars)
 
@@ -126,14 +128,39 @@ def Pets(directory):
 
     subset = ['train'] * len(train_anno) + ['test'] * len(test_anno)
     
-    dPets = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels, 'subset' : subset}
+    dPets = {'filePath' : paths, 'baseName' : baseNames, 'label0' :
+            label0, 'lebel1' : label1, 'subset' : subset}
 
     return(dPets)
     ## END Pets
 
-def SUN397():
+def SUN397(directory):
 
-    return(0)
+    sun397_dir = directory + 'SUN397/'
+
+    paths = []
+    baseNames = []
+    labels0 = []
+
+    pathList = []
+
+    with open(sun397_dir + 'ClassName.txt') as f:
+        for l in f.readlines():
+            pathList.append(l.strip()[1::])
+
+    for p in [sun397_dir + pa for pa in pathList]:
+        tmp = glob.glob(p + '/*.jpg')
+        lab = '_'.join(p.split('/')[4::])
+
+        baseNames.extend([ti.split('/')[-1] for ti in tmp])
+        paths.extend(tmp)
+        labels0.extend([lab] * len(tmp))
+
+
+    dSUN = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels0}
+
+    return(dSUN)
+    ## END SUN397
 
 def VOCdevkit():
     di = x + "/VOCdevkit/VOC2007/"
@@ -164,7 +191,9 @@ def food101():
     return(0)
 
 
+def mergeAll():
 
+    return(0)
 
 def main(directory):
     obj = Object101(directory)

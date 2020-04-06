@@ -20,27 +20,27 @@ appropriately named.
 | DTD | [Link](http://www.robots.ox.ac.uk/~vgg/data/dtd/) | 47 | 
 | Pets | [Link](http://www.robots.ox.ac.uk/~vgg/data/pets/) | 37 |
 | Caltech-101 | [Link](http://www.vision.caltech.edu/Image_Datasets/Caltech101/Caltech101.html) | 101
-| Flowers | [Link](https://www.robots.ox.ac.uk/~vgg/data/flowers/17/) | 102 |
+| Flowers | [Link](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/index.html) | 102 |
 
 
 
 The total number of images should be 312,252
 
 
-| Dataset Name  | train|  test| classes|
-|:--------------|-----:|-----:|-------:|
-|birdsnap       | 47386|  2443| 500    |
-|cifar10        | 50000| 10000| 10     |   
-|cifar100       | 50000| 10000| 100    |
-|DTD            |  3760|  1880| 47     |
-|FGVC_Aircraft  |  6667|  3333| 100    |
-|flowers        |  2040|  6149| 102    |
-|stanford-cars  |  8144|  8041| 196    |
-|Oxford_Pets    |  3680|  3369| 37     |
-|food-101       | 75750| 25250| 101    |
-|PASCAL_VOC2007 |  5011|  4952| 20     |
-|Caltech-101    |  3060|  6084| 102    |
-|SUN397         | 19850| 19850| 397    |
+| Dataset Name  | train|  test| classes| Labels |
+|:--------------|-----:|-----:|-------:|-------:|
+|birdsnap       | 47386|  2443| 500    | All    |
+|cifar10        | 50000| 10000| 10     | All    |
+|cifar100       | 50000| 10000| 100    | All    |
+|DTD            |  3760|  1880| 47     | All    |
+|FGVC_Aircraft  |  6667|  3333| 100    | All    |
+|flowers        |  2040|  6149| 102    | ALL    |
+|stanford-cars  |  8144|  8041| 196    | All    |
+|Oxford_Pets    |  3680|  3369| 37     | All    |
+|food-101       | 75750| 25250| 101    | All    |
+|PASCAL_VOC2007 |  5011|  4952| 20     | ?      |
+|Caltech-101    |  3060|  6084| 102    | All    |
+|SUN397         | 19850| 19850| 397    | ALL    |
 
 
 # Image Pre-processing

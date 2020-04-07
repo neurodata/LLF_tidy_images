@@ -82,8 +82,8 @@ def Cars(directory):
 
     return(dCars)
 
-def Flowers():
-
+def Flowers(directory):
+    
     return(0)
 
 def Pets(directory):
@@ -187,8 +187,25 @@ def fgvc():
     return(0)
 
 def food101():
+    food_dir = directory + "food-101/images/" 
+    classes = os.listdir(food_dir)
+    classes.sort()
 
-    return(0)
+    paths = []
+    baseNames = []
+    labels0 = []
+    
+
+    for ci in classes:
+        tmp = glob.glob(food_dir + ci + "/*.jpg")
+        paths.extend(tmp)
+        baseNames.extend([b.split('/')[5] for b in tmp])
+        labels0.extend([ci] * len(tmp))
+        
+
+    dFood = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels0}
+
+    return(dFood)
 
 
 def mergeAll():

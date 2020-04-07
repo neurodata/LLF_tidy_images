@@ -178,15 +178,51 @@ def birdsnap():
 
     return(0)
 
-def dtd():
+def dtd(directory):
+    dtd_dir = directory + "dtd/" 
+
+    paths = []
+    baseNames = []
+    labels0 = []
+    labels1 = []
+    labels2 = []
+    labels3 = []
+
+    with open(dtd_dir + "labels/labels_joint_anno.txt") as f:
+        for line in f:
+            row = line.strip().split(' ')
+
+            paths.append(dtd_dir + row[0])
+            baseNames.append(row[0].split('/')[-1])
+            labels0.append(row[1])
+            if len(row) > 2:
+                labels1.append(row[1])
+            else: 
+                labels1.append("NA")
+
+            if len(row) > 3:
+                labels2.append(row[2])
+            else: 
+                labels2.append("NA")
+
+            if len(row) > 4:
+                labels3.append(row[3])
+            else: 
+                labels3.append("NA")
+
+    dDTD = {'filePath' : paths, 'baseName' : baseNames, 'label0' :
+            labels0, 'label1' : labels1, 'label2' : labels2, 'label3' :
+            labels3}
+
+    return(dDTD)
+
+def fgvc(directory):
+    fgvc_dir = directory + "fgvc-aircraft-2013b/" 
+    classes = os.listdir(fgvc_dir + 'data')
 
     return(0)
 
-def fgvc():
-
-    return(0)
-
-def food101():
+def food101(directory):
     food_dir = directory + "food-101/images/" 
     classes = os.listdir(food_dir)
     classes.sort()
@@ -202,7 +238,6 @@ def food101():
         baseNames.extend([b.split('/')[5] for b in tmp])
         labels0.extend([ci] * len(tmp))
         
-
     dFood = {'filePath' : paths, 'baseName' : baseNames, 'label0' : labels0}
 
     return(dFood)

@@ -16,7 +16,7 @@ import pandas as pd
 ## dictionary = {"dataset" : dataset = [{'filename':filename, 'label':label]}
 
 
-def Object101(directory):
+def get_Object101(directory):
    
     ob101 = directory + "101_ObjectCategories/" 
     folders = os.listdir(ob101)
@@ -42,7 +42,7 @@ def Object101(directory):
 
     return(dOBJ101)
 
-def Cars(directory):
+def get_Cars(directory):
     cars = directory + "Cars/" 
     train_dir = cars + "cars_train/"
     test_dir = cars + "cars_train/"
@@ -82,11 +82,11 @@ def Cars(directory):
 
     dCars = {'dataset' : ['Cars'] * len(paths), 'filePath' : paths, 
             'baseName' : baseNames, 'label0' : labels0, 
-            'labels1' : labels1, 'subset' : subset}
+            'label1' : labels1, 'subset' : subset}
 
     return(dCars)
 
-def Flowers(directory):
+def get_Flowers(directory):
    
     flower_dir = directory + '102Flowers/'
     
@@ -114,7 +114,7 @@ def Flowers(directory):
 
     return(dFlowers)
 
-def Pets(directory):
+def get_Pets(directory):
     pets_dir = directory + "Pets/" 
     anno_dir = pets_dir + "annotations/"
 
@@ -162,7 +162,7 @@ def Pets(directory):
     return(dPets)
     ## END Pets
 
-def SUN397(directory):
+def get_SUN397(directory):
 
     sun397_dir = directory + 'SUN397/'
 
@@ -190,8 +190,8 @@ def SUN397(directory):
     return(dSUN)
     ## END SUN397
 
-def VOCdevkit():
-    di = x + "/VOCdevkit/VOC2007/"
+def get_VOCdevkit(directory):
+    di = directory + "/VOCdevkit/VOC2007/"
     labDir = di + "/ImageSets/Main/"
 
     for x in glob.glob(labDir + "/*_train.txt"):
@@ -200,13 +200,33 @@ def VOCdevkit():
     for x in glob.glob(labDir + "/*_val.txt"):
         print(x)
 
+    for x in glob.glob(labDir + "/*_trainval.txt"):
+        print(x)
     return(0)
 
-def birdsnap():
+def get_birdsnap(directory):
+    bird_dir = directory + 'birdsnap/download/images/' 
 
-    return(0)
+    classes = os.listdir(bird_dir)
+    classes.sort()
+    classes
 
-def dtd(directory):
+    paths = []
+    baseNames = []
+    labels0 = []
+    
+
+    for ci in classes:
+        tmp = glob.glob(bird_dir + ci + "/*.jpg")
+        paths.extend(tmp)
+        baseNames.extend([b.split('/')[5] for b in tmp])
+        labels0.extend([ci] * len(tmp))
+        
+    dBird = {'dataset' : ['birdsnap'] * len(paths), 'filePath' : paths, 'baseName' : baseNames, 'label0' : labels0}
+
+    return(dBird)
+
+def get_dtd(directory):
     dtd_dir = directory + "dtd/" 
 
     paths = []
@@ -244,7 +264,7 @@ def dtd(directory):
 
     return(dDTD)
 
-def fgvc(directory):
+def get_fgvc(directory):
     fgvc_dir = directory + 'FGVC/fgvc-aircraft-2013b/'
     data_dir = fgvc_dir + 'data/'
     image_dir = fgvc_dir + 'data/images/'
@@ -335,7 +355,7 @@ def fgvc(directory):
 
     return(dFGVC)
 
-def food101(directory):
+def get_food101(directory):
     food_dir = directory + "food-101/images/" 
     classes = os.listdir(food_dir)
     classes.sort()
@@ -362,20 +382,15 @@ def mergeAll():
 
 def main(directory):
 
-    #datasets = {
-    #        'obj101' : Object101(directory),
-    #        'fgvc'   : fgvc(directory),
-    #        'food'   : food101(directory),
-    #        'dtd'    : dtd(directory)
-    #        }
-
     datasets = [
-            pd.DataFrame(Object101(directory)),
-            pd.DataFrame(fgvc(directory)),
-            pd.DataFrame(food101(directory)),
-            pd.DataFrame(Cars(directory)),
-            pd.DataFrame(SUN397(directory)),
-            pd.DataFrame(dtd(directory))
+            pd.DataFrame(get_Object101(directory)),
+            pd.DataFrame(get_fgvc(directory)),
+            pd.DataFrame(get_food101(directory)),
+            pd.DataFrame(get_Cars(directory)),
+            pd.DataFrame(get_SUN397(directory)),
+            pd.DataFrame(get_dtd(directory)),
+            pd.DataFrame(get_Flowers(directory)),
+            pd.DataFrame(get_birdsnap(directory))
             ]
     
     return(datasets)
@@ -392,20 +407,6 @@ if __name__ == "__main__":
     A = pd.concat(datasets)
 
     
-
-    
-
-
-    dA = {'dataset' : [1], 'filePath' : ['A'], 'label0' : ['a0']}
-    dB = {'dataset' : [2], 'filePath' : ['B'], 'label0' : ['l0'], 'label1' : ['l1']}
-    dC = {'dataset' : [3], 'filePath' : ['C'], 'label0' : ['ab0'],
-            'label1' : ['ab1'], 'label2' : ['ab2']}
-
-    A = pd.DataFrame(dA)
-    B = pd.DataFrame(dB)
-    C = pd.DataFrame(dC)
-
-pd.concat([A,B,C])
 
 
 

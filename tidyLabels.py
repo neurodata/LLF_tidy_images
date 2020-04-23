@@ -3,6 +3,7 @@ from PIL import Image
 from PIL import ImageOps
 from math import floor, sqrt
 from scipy.io import loadmat
+from collections import deque
 import csv
 import glob
 import os
@@ -191,18 +192,101 @@ def get_SUN397(directory):
     ## END SUN397
 
 def get_VOCdevkit(directory):
-    di = directory + "/VOCdevkit/VOC2007/"
-    labDir = di + "/ImageSets/Main/"
+    di = directory + '/VOCdevkit/VOC2007/'
 
-    for x in glob.glob(labDir + "/*_train.txt"):
-        print(x)
+    labDir = di + '/ImageSets/Main/'
+    jpgDir = di + '/JPEGImages/'
 
-    for x in glob.glob(labDir + "/*_val.txt"):
-        print(x)
+    paths = glob.glob(jpgDir + '*.jpg')
+    baseNames = [p.split('/')[-1] for p in paths]
+    keyNames = [b.split('.')[0] for b in baseNames]
 
-    for x in glob.glob(labDir + "/*_trainval.txt"):
-        print(x)
-    return(0)
+    file_dict = {ki: {'dataset' : 'VOC', 'filePath' : p, 'baseName' :
+        bi, 'labelL' : deque()} for ki,bi,p in
+        zip(keyNames,baseNames,paths)}
+
+    ## Get Training/Validation data
+    trainValList = sorted(glob.glob(labDir + "/*_trainval.txt"))
+
+    for x in trainValList:
+        with open(x, 'r') as f:
+            trainVal_rows = pd.read_csv(f,header=None)
+            label = x.split('/')[-1].split('_trainval')[0]
+            for index, row in trainVal_rows.iterrows():
+                tmpKi = row[0].split(' ')[0] 
+                tmp = row[0].split(' ')[-1]
+                if tmp == '1': 
+                    file_dict[tmpKi]['labelL'].appendleft(label)
+                if tmp == '0':
+                    file_dict[tmpKi]['labelL'].append(label)
+
+    ## Add Testing data
+    di = directory + '/VOCdevkit/VOC2007test/VOC2007'
+
+    labDir = di + '/ImageSets/Main/'
+    jpgDir = di + '/JPEGImages/'
+
+    paths = glob.glob(jpgDir + '*.jpg')
+    baseNames = [p.split('/')[-1] for p in paths]
+    keyNames = [b.split('.')[0] for b in baseNames]
+
+
+    ## Get Testin data
+    for ki,bi,p in zip(keyNames, baseNames, paths):
+        file_dict[ki] = {'filePath' : p, 'baseName' : bi, 'labelL' : deque()}
+
+
+    testList = sorted(glob.glob(labDir + "/*_test.txt"))
+
+    for x in testList:
+        with open(x, 'r') as f:
+            test_rows = pd.read_csv(f,header=None)
+            label = x.split('/')[-1].split('_test')[0]
+            for index, row in test_rows.iterrows():
+                tmpKi = row[0].split(' ')[0] 
+                tmp = row[0].split(' ')[-1]
+                if tmp == '1': 
+                    file_dict[tmpKi]['labelL'].appendleft(label)
+                if tmp == '0':
+                    file_dict[tmpKi]['labelL'].append(label)
+
+
+    
+### -1:
+### Negative: The image contains no objects of the class of interest. A classifier should give a `negative' output.
+### 1:
+### Positive: The image contains at least one object of the class of interest. A classifier should give a `positive' output.
+### 0:
+### ``Difficult'': The image contains only objects of the class of interest marked as `difficult'. The output of the classifier for this image does not affect its evaluation.
+
+
+    #Labels
+
+    vocDat = pd.DataFrame(file_dict).transpose()
+
+    labs = {ki : {'label0' : 'NaN', 'label1' : 'NaN', 'label2' : 'NaN',
+        'label3' : 'NaN', 'label4' : 'NaN', 'label5' : 'NaN', 'label6' :
+        'NaN'} for ki in file_dict.keys()}
+    
+    Xl = lambda x: ['label0','label1','label2','label3','label4','label5',
+            'label6'][x]
+
+    for index, row in vocDat.iterrows():
+        l0 = vocDat.loc[row.name]['labelL']
+
+        for i in range(len(l0)):
+            labs[row.name][Xl(i)] = vocDat.loc[row.name]['labelL'][i]
+
+
+    lpd = pd.DataFrame(labs).transpose()
+    out = pd.concat([vocDat, lpd], axis = 1)
+
+    pdVOC = out.drop(['labelL'], axis = 1)
+    pdVOC['dataset'] = ["VOC"] * pdVOC.shape[0]
+
+    dVOC = pdVOC.to_dict()
+
+    return(dVOC)
 
 def get_birdsnap(directory):
     bird_dir = directory + 'birdsnap/download/images/' 
@@ -390,7 +474,8 @@ def main(directory):
             pd.DataFrame(get_SUN397(directory)),
             pd.DataFrame(get_dtd(directory)),
             pd.DataFrame(get_Flowers(directory)),
-            pd.DataFrame(get_birdsnap(directory))
+            pd.DataFrame(get_birdsnap(directory)),
+            pd.DataFrame(get_VOCdevkit(directory)),
             ]
     
     return(datasets)
@@ -401,10 +486,11 @@ if __name__ == "__main__":
 
     wd = os.getcwd()
     directory = "../datasets_resized_wLabels/"
+    #datasets = main(directory)
 
-    datasets = main(directory)
-
-    A = pd.concat(datasets)
+    #A = pd.concat(datasets)
+    A = pd.DataFrame(get_birdsnap(directory))
+    B = pd.DataFrame(get_VOCdevkit(directory))
 
     
 

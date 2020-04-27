@@ -158,7 +158,7 @@ def get_Pets(directory):
     subset = ['train'] * len(train_anno) + ['test'] * len(test_anno)
     
     dPets = {'dataset' : ['Pets'] * len(paths), 'filePath' : paths, 'baseName' : baseNames, 'label0' :
-            label0, 'lebel1' : label1, 'subset' : subset}
+            label0, 'label1' : label1, 'subset' : subset}
 
     return(dPets)
     ## END Pets
@@ -475,6 +475,7 @@ def main(directory):
             pd.DataFrame(get_dtd(directory)),
             pd.DataFrame(get_Flowers(directory)),
             pd.DataFrame(get_birdsnap(directory)),
+            pd.DataFrame(get_Pets(directory)),
             pd.DataFrame(get_VOCdevkit(directory)),
             ]
     
@@ -486,12 +487,9 @@ if __name__ == "__main__":
 
     wd = os.getcwd()
     directory = "../datasets_resized_wLabels/"
-    #datasets = main(directory)
+    datasets = main(directory)
 
-    #A = pd.concat(datasets)
-    A = pd.DataFrame(get_birdsnap(directory))
-    B = pd.DataFrame(get_VOCdevkit(directory))
-
+    A = pd.concat(datasets)
     
 
 

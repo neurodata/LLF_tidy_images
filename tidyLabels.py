@@ -490,8 +490,8 @@ if __name__ == "__main__":
     datasets = main(directory)
 
     A = pd.concat(datasets)
-    
 
+    A.to_csv('out_all.csv', index = False)
 
 
 

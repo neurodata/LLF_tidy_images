@@ -1,7 +1,7 @@
 # Preprocessing steps per dataset
 
 Some of the preprocessing requires
-[ImageMagick](https://imagemagick.org/index.php) and python.
+[ImageMagick](https://imagemagick.org/index.php) and python including tensorFlow (non GPU is ok).
 
 ## FGVC_Aircraft
 

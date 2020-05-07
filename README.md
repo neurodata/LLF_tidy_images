@@ -34,18 +34,38 @@ The total number of images should be 312,252
 |cifar100       | 50000| 10000| 100    | All    |
 |DTD            |  3760|  1880| 47     | All    |
 |FGVC_Aircraft  |  6667|  3333| 100    | All    |
-|flowers        |  2040|  6149| 102    | ALL    |
+|flowers        |  2040|  6149| 102    | All    |
 |stanford-cars  |  8144|  8041| 196    | All    |
 |Oxford_Pets    |  3680|  3369| 37     | All    |
 |food-101       | 75750| 25250| 101    | All    |
-|PASCAL_VOC2007 |  5011|  4952| 20     | ?      |
+|PASCAL_VOC2007 |  5011|  4952| 20     | All    |
 |Caltech-101    |  3060|  6084| 102    | All    |
 |SUN397         | 19850| 19850| 397    | ALL    |
+
+
+# Downloading
+
+The links to all of the datasets are save in the `download.sh` script
+which sets up the proper folders and downloads and unpacks the datasets.
+
+Run with `sh download.sh`
 
 
 # Image Pre-processing
 
 See [preprocessing.md](./preprocessing.md)
+
+
+# Output labels
+
+Then to create the csv file that holds all of the file paths and labels
+for all of the images across all of the datasets run
+
+```
+python3 tidyLabels.py
+```
+
+
 
 
 ---

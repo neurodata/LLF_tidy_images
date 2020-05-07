@@ -1,7 +1,7 @@
 #!/usr/env bash
 
 WORKDIR="$PWD"
-if false; then
+if true; then
 # Setup
 	#mkdir ../compressed
 	mkdir ../datasets_ORIGINAL
@@ -9,17 +9,15 @@ if false; then
 	mkdir ../datasets_padded
 	mkdir ../datasets_resized
 	mkdir ../datasets_resized_wLabels
-
 fi
 
+
 #Download
-	cd ../datasets_ORIGINAL
-	OG="$PWD"
+cd ../datasets_ORIGINAL
+OG="$PWD"
 
 
-## Cars: http://host.robots.ox.ac.uk/pascal/VOC/voc2007/
-
-  if false; then
+if true; then
 ## 101_ObjectCategories CalTech
   cd $OG
   wget http://www.vision.caltech.edu/Image_Datasets/Caltech101/101_ObjectCategories.tar.gz
@@ -72,16 +70,51 @@ fi
 
   tar -xzf fgvc-aircraft-2013b.tar.gz
 
+
+  ## Birdsnap
+  cd $OG
+  wget http://thomasberg.org/datasets/birdsnap/1.1/birdsnap.tgz
+  tar -xzf birdsnap.tgz
+  cd birdsnap;
+  ## Should be python2
+  python get_birdsnap.py
+
+  ## PASCAL VOC
+  cd $OG;
+  mkdir VOC2007; cd VOC2007; VOC=$PWD
+  mkdir VOCtest;
+
+  ## trainval data
+  wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
+  tar -xf VOCtrainval_06-Nov-2007.tar
+
+  ## annotated test data
+  wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
+  tar -xf VOCtest_06-Nov-2007.tar -C VOCtest
+
+
+
+  ## DTD
+  cd $OG; #mkdir DTD; cd DTD; DTD=$PWD
+  wget http://www.robots.ox.ac.uk/~vgg/data/dtd/download/dtd-r1.0.1.tar.gz
+  tar -xzf dtd-r1.0.1.tar.gz
+
+
+  ## PETS
+  cd $OG; mkdir Pets; cd Pets; PETS=$PWD
+  wget https://www.robots.ox.ac.uk/~vgg/data/pets/data/images.tar.gz
+  wget https://www.robots.ox.ac.uk/~vgg/data/pets/data/annotations.tar.gz
+
+  ## Food-101
+  cd $OG; 
+  wget http://data.vision.ee.ethz.ch/cvl/food-101.tar.gz
+  tar -xzf food-101.tar.gz
+
   fi 
-
-
-
-
-
 
 ## CLEANING
 #if false; then
-#  #  find $OG -regex ".*\(tgz\|tar.gz\)" -exec mv {} ../compressed/ ;
+#  #  find $OG -regex ".*\(tgz\|tar.gz\|tar\)" -exec mv {} ../compressed/ ;
 #fi
 
 

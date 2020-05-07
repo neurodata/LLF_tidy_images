@@ -9,7 +9,7 @@ appropriately named.
 
 | Dataset Name | Source | Classes |
 |:-------------|:-------|:--------|
-| Food-101 | [Link](https://vision.ee.ethz.ch/datasets_extra/food-101/) | 101 |
+| Food-101 | [Link](https://data.vision.ee.ethz.ch/cvl/datasets_extra/food-101/) | 101 |
 | CIFAR-10     | [Link](https://www.cs.toronto.edu/~kriz/cifar.html) | 10 | 
 | CIFAR-100    | [Link](https://www.cs.toronto.edu/~kriz/cifar.html) | 100 |
 | BirdSnap     | [Link](http://thomasberg.org)  | 500 | 

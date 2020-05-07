@@ -70,15 +70,6 @@ if true; then
 
   tar -xzf fgvc-aircraft-2013b.tar.gz
 
-
-  ## Birdsnap
-  cd $OG
-  wget http://thomasberg.org/datasets/birdsnap/1.1/birdsnap.tgz
-  tar -xzf birdsnap.tgz
-  cd birdsnap;
-  ## Should be python2
-  python get_birdsnap.py
-
   ## PASCAL VOC
   cd $OG;
   mkdir VOC2007; cd VOC2007; VOC=$PWD
@@ -91,7 +82,6 @@ if true; then
   ## annotated test data
   wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
   tar -xf VOCtest_06-Nov-2007.tar -C VOCtest
-
 
 
   ## DTD
@@ -110,12 +100,30 @@ if true; then
   wget http://data.vision.ee.ethz.ch/cvl/food-101.tar.gz
   tar -xzf food-101.tar.gz
 
+  ## CIFAR-10
+  cd $OG;
+  wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
+  tar -xzf cifar-10-python.tar.gz
+
+  ## CIFAR-100
+  cd $OG;
+  wget https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
+  tar -xzf cifar-100-python.tar.gz
+
+  ## Birdsnap
+  cd $OG
+  wget http://thomasberg.org/datasets/birdsnap/1.1/birdsnap.tgz
+  tar -xzf birdsnap.tgz
+  cd birdsnap;
+  ## Should be python2
+  python get_birdsnap.py
+
   fi 
 
 ## CLEANING
-#if false; then
-#  #  find $OG -regex ".*\(tgz\|tar.gz\|tar\)" -exec mv {} ../compressed/ ;
-#fi
+if true; then
+  find $OG -regex ".*\(tgz\|tar.gz\|tar\)" -exec mv {} ../compressed/ ;
+fi
 
 
 
